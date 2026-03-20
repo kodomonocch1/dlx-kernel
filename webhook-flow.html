@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DLX Webhook Flow</title>
+    <link rel="stylesheet" href="./kit.css" />
+  </head>
+  <body class="kit-page">
+    <header class="kit-header">
+      <div class="kit-header-inner">
+        <a class="kit-brand" href="./index.html">DLX Evaluator Kit</a>
+        <nav class="kit-nav" aria-label="Evaluator kit">
+          <a href="./index.html">Index</a>
+          <a href="./quickstart.html">Quickstart</a>
+          <a href="./api-overview.html">API Overview</a>
+          <a href="./webhook-flow.html" aria-current="page">Webhook Flow</a>
+          <a href="./roi-calculator.html">ROI Calculator</a>
+          <a href="./receipt-viewer.html">Receipt Viewer</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="kit-main">
+      <section class="kit-hero">
+        <p class="kit-eyebrow">Delivery Boundary</p>
+        <h1>Webhook delivery does not redefine workflow truth.</h1>
+        <p class="kit-lede">
+          The gateway is accepted-first. Webhooks are optional for evaluation, and polling remains
+          a valid path for checking terminal states.
+        </p>
+      </section>
+
+      <section class="kit-section">
+        <h2>Webhook Test Endpoint</h2>
+        <p class="kit-copy">
+          The current public test path for evaluating the delivery boundary is
+          <span class="kit-inline-code">POST /v1/webhooks/test</span>.
+        </p>
+        <pre class="kit-code">{
+  "accepted": true,
+  "eventId": "exec_mmz8xzls_8gr5jxyq",
+  "targetUrl": "https://webhook.site/af214b59-a05d-431f-9d81-e4706a6a3e96",
+  "eventType": "gateway.delivery.test",
+  "receivedAt": "2026-03-20T18:42:40.384Z",
+  "deliveryState": "delivered"
+}</pre>
+      </section>
+
+      <section class="kit-section">
+        <h2>Observed Webhook Payload</h2>
+        <p class="kit-copy">
+          Confirmed observed payload from the webhook target:
+        </p>
+        <pre class="kit-code">{
+  "eventId": "exec_mmz8xzls_8gr5jxyq",
+  "eventType": "gateway.delivery.test",
+  "deliveredAt": "2026-03-20T18:42:40.384Z",
+  "payload": {
+    "probe": "phase1-demo"
+  }
+}</pre>
+      </section>
+
+      <section class="kit-section">
+        <h2>Important Boundary</h2>
+        <ul class="kit-list">
+          <li>webhook is not required for evaluation</li>
+          <li>polling <span class="kit-inline-code">GET /v1/executions/:id</span> remains the simplest path for success and failed_safe evaluation</li>
+          <li>execution terminal states remain <span class="kit-inline-code">succeeded</span> and <span class="kit-inline-code">failed_safe</span></li>
+        </ul>
+        <div class="kit-actions">
+          <a class="kit-button" href="./api-overview.html">Back To API Overview</a>
+          <a class="kit-button secondary" href="./index.html#next-step">Next Step</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

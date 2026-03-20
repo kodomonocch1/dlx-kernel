@@ -1,0 +1,27 @@
+{
+  "receiptVersion": "1.0",
+  "receiptId": "rcpt_01hzk8p8wb4jzt3g70f1b91n0x",
+  "executionId": "exec_01hzk8nzv9n7y1cz3h1a7a4d6k",
+  "workflowId": "wf_01hzk8peb0m1d6f7a6r8s2v9qn",
+  "managedWorkflow": "auditable_execution_gateway",
+  "status": "failed_safe",
+  "outcome": "safe_failure",
+  "outputContract": "contract:extract.result.v1",
+  "acceptedAt": "2026-03-20T11:40:05.000Z",
+  "decidedAt": "2026-03-20T11:40:32.000Z",
+  "deliveryState": "recorded",
+  "validation": {
+    "result": "failed",
+    "validator": "contract_reference",
+    "contractReference": "contract:extract.result.v1"
+  },
+  "safeFailure": {
+    "failureClassification": "schema_failure",
+    "reasonCode": "missing_required_field"
+  },
+  "auditSummary": {
+    "eventCount": 10,
+    "repairAttempts": 2,
+    "receiptScope": "public_safe"
+  }
+}

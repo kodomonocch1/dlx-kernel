@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DLX ROI Calculator</title>
+    <link rel="stylesheet" href="./kit.css" />
+    <style>
+      :root {
+        --paper: #f4efe6;
+        --panel: rgba(255, 252, 247, 0.9);
+        --ink: #162127;
+        --muted: #536169;
+        --line: rgba(22, 33, 39, 0.12);
+        --accent: #0f766e;
+        --accent-strong: #0b4f4a;
+        --warn: #9a3412;
+        --shadow: 0 18px 50px rgba(22, 33, 39, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 36%),
+          radial-gradient(circle at top right, rgba(154, 52, 18, 0.12), transparent 30%),
+          linear-gradient(180deg, #efe6d8 0%, #f7f3ec 42%, #f1ece3 100%);
+      }
+
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 48px 20px 56px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 0.86rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-strong);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.4rem, 5vw, 4.5rem);
+        line-height: 0.95;
+        max-width: 10ch;
+      }
+
+      .lede {
+        margin: 0;
+        max-width: 66ch;
+        font-size: 1.08rem;
+        line-height: 1.65;
+        color: var(--muted);
+      }
+
+      .note {
+        padding: 16px 18px;
+        border-left: 4px solid var(--accent);
+        background: rgba(255, 255, 255, 0.52);
+        box-shadow: var(--shadow);
+        max-width: 72ch;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(320px, 1.05fr) minmax(320px, 0.95fr);
+        gap: 22px;
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .panel h2 {
+        margin-top: 0;
+      }
+
+      .preset-grid {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+
+      .preset {
+        width: 100%;
+        text-align: left;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--ink);
+        cursor: pointer;
+        transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+      }
+
+      .preset:hover,
+      .preset:focus-visible {
+        transform: translateY(-1px);
+        border-color: rgba(15, 118, 110, 0.5);
+        background: rgba(240, 255, 252, 0.92);
+        outline: none;
+      }
+
+      .preset strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+      }
+
+      .preset span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.45;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      label {
+        display: grid;
+        gap: 7px;
+        font-size: 0.94rem;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        border: 1px solid rgba(22, 33, 39, 0.18);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.94);
+        color: var(--ink);
+        padding: 12px 13px;
+        font: inherit;
+      }
+
+      input:focus-visible {
+        outline: 2px solid rgba(15, 118, 110, 0.25);
+        border-color: var(--accent);
+      }
+
+      .muted {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.55;
+      }
+
+      .results {
+        display: grid;
+        gap: 12px;
+      }
+
+      .result-card {
+        display: grid;
+        gap: 4px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid var(--line);
+      }
+
+      .result-card strong {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .result-card span {
+        font-size: clamp(1.5rem, 3vw, 2.3rem);
+        line-height: 1;
+      }
+
+      .accent {
+        color: var(--accent-strong);
+      }
+
+      .warn {
+        color: var(--warn);
+      }
+
+      .foot {
+        margin-top: 14px;
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 960px) {
+        .layout,
+        .field-grid {
+          grid-template-columns: 1fr;
+        }
+
+        main {
+          padding-top: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body class="kit-page">
+    <header class="kit-header">
+      <div class="kit-header-inner">
+        <a class="kit-brand" href="./index.html">DLX Evaluator Kit</a>
+        <nav class="kit-nav" aria-label="Evaluator kit">
+          <a href="./index.html">Index</a>
+          <a href="./quickstart.html">Quickstart</a>
+          <a href="./api-overview.html">API Overview</a>
+          <a href="./webhook-flow.html">Webhook Flow</a>
+          <a href="./roi-calculator.html" aria-current="page">ROI Calculator</a>
+          <a href="./receipt-viewer.html">Receipt Viewer</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">DLX / Auditable Execution Gateway</p>
+        <h1>Silent failures are the expensive failures.</h1>
+        <p class="lede">
+          Use this calculator to estimate the monthly cost of silent AI workflow failures in
+          high-stakes operations. DLX is sold as workflow insurance, not just API access.
+        </p>
+        <div class="note">
+          This is an estimate of silent-failure cost, not a formal financial guarantee. The
+          purpose is to model avoidable downstream cost when schema-valid output is still wrong,
+          incomplete, or operationally unsafe.
+        </div>
+      </section>
+
+      <section class="layout">
+        <div class="panel">
+          <h2>Inputs</h2>
+          <div class="preset-grid">
+            <button class="preset" type="button" data-preset="invoice">
+              <strong>Invoice Extraction Agency</strong>
+              <span>High volume intake with manual cleanup, client escalations, and hidden misses.</span>
+            </button>
+            <button class="preset" type="button" data-preset="compliance">
+              <strong>Compliance Routing Workflow</strong>
+              <span>Lower volume, higher liability, and expensive downstream review loops.</span>
+            </button>
+            <button class="preset" type="button" data-preset="procurement">
+              <strong>Procurement / Supply-Chain Docs</strong>
+              <span>Document-heavy operations where silent errors trigger delays, rework, and vendor friction.</span>
+            </button>
+          </div>
+
+          <form id="roi-form">
+            <div class="field-grid">
+              <label for="monthly_task_volume">
+                monthly_task_volume
+                <input id="monthly_task_volume" type="number" min="0" step="1" value="15000" />
+              </label>
+              <label for="failure_rate_percent">
+                failure_rate_percent
+                <input id="failure_rate_percent" type="number" min="0" step="0.1" value="3.2" />
+              </label>
+              <label for="manual_rework_minutes_per_failure">
+                manual_rework_minutes_per_failure
+                <input
+                  id="manual_rework_minutes_per_failure"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value="18"
+                />
+              </label>
+              <label for="hourly_ops_cost_usd">
+                hourly_ops_cost_usd
+                <input id="hourly_ops_cost_usd" type="number" min="0" step="1" value="38" />
+              </label>
+              <label for="monthly_client_penalty_or_loss_usd">
+                monthly_client_penalty_or_loss_usd
+                <input
+                  id="monthly_client_penalty_or_loss_usd"
+                  type="number"
+                  min="0"
+                  step="100"
+                  value="6500"
+                />
+              </label>
+              <label for="expected_failure_reduction_percent">
+                expected_failure_reduction_percent
+                <input
+                  id="expected_failure_reduction_percent"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value="60"
+                />
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h2>Estimated Monthly Impact</h2>
+          <div class="results">
+            <div class="result-card">
+              <strong>Estimated Monthly Failure Count</strong>
+              <span id="failure-count">0</span>
+            </div>
+            <div class="result-card">
+              <strong>Estimated Monthly Manual Rework Cost</strong>
+              <span id="manual-rework-cost">$0</span>
+            </div>
+            <div class="result-card">
+              <strong>Total Estimated Monthly Failure Cost</strong>
+              <span id="total-cost" class="warn">$0</span>
+            </div>
+            <div class="result-card">
+              <strong>Estimated Post-DLX Cost</strong>
+              <span id="post-dlx-cost">$0</span>
+            </div>
+            <div class="result-card">
+              <strong>Estimated Monthly Savings</strong>
+              <span id="monthly-savings" class="accent">$0</span>
+            </div>
+          </div>
+          <p class="muted foot">
+            This estimate treats failure reduction as reduced silent-failure incidence and the
+            downstream rework or loss tied to those failures. It is meant to support pain
+            validation and workflow review conversations.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const presets = {
+        invoice: {
+          monthly_task_volume: 15000,
+          failure_rate_percent: 3.2,
+          manual_rework_minutes_per_failure: 18,
+          hourly_ops_cost_usd: 38,
+          monthly_client_penalty_or_loss_usd: 6500,
+          expected_failure_reduction_percent: 60,
+        },
+        compliance: {
+          monthly_task_volume: 6000,
+          failure_rate_percent: 2.1,
+          manual_rework_minutes_per_failure: 28,
+          hourly_ops_cost_usd: 52,
+          monthly_client_penalty_or_loss_usd: 18000,
+          expected_failure_reduction_percent: 55,
+        },
+        procurement: {
+          monthly_task_volume: 9000,
+          failure_rate_percent: 1.7,
+          manual_rework_minutes_per_failure: 35,
+          hourly_ops_cost_usd: 47,
+          monthly_client_penalty_or_loss_usd: 24000,
+          expected_failure_reduction_percent: 50,
+        },
+      };
+
+      const fieldIds = [
+        "monthly_task_volume",
+        "failure_rate_percent",
+        "manual_rework_minutes_per_failure",
+        "hourly_ops_cost_usd",
+        "monthly_client_penalty_or_loss_usd",
+        "expected_failure_reduction_percent",
+      ];
+
+      const inputs = Object.fromEntries(
+        fieldIds.map((id) => [id, document.getElementById(id)]),
+      );
+
+      const outputNodes = {
+        failureCount: document.getElementById("failure-count"),
+        manualReworkCost: document.getElementById("manual-rework-cost"),
+        totalCost: document.getElementById("total-cost"),
+        postDlxCost: document.getElementById("post-dlx-cost"),
+        monthlySavings: document.getElementById("monthly-savings"),
+      };
+
+      const currencyFormatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      });
+
+      const countFormatter = new Intl.NumberFormat("en-US", {
+        maximumFractionDigits: 0,
+      });
+
+      function readNumber(id) {
+        const value = Number(inputs[id].value);
+        return Number.isFinite(value) && value >= 0 ? value : 0;
+      }
+
+      function update() {
+        const monthlyTaskVolume = readNumber("monthly_task_volume");
+        const failureRatePercent = readNumber("failure_rate_percent");
+        const manualReworkMinutesPerFailure = readNumber("manual_rework_minutes_per_failure");
+        const hourlyOpsCostUsd = readNumber("hourly_ops_cost_usd");
+        const monthlyClientPenaltyOrLossUsd = readNumber("monthly_client_penalty_or_loss_usd");
+        const expectedFailureReductionPercent = Math.min(
+          100,
+          readNumber("expected_failure_reduction_percent"),
+        );
+
+        const estimatedMonthlyFailureCount = monthlyTaskVolume * (failureRatePercent / 100);
+        const estimatedMonthlyManualReworkCost =
+          estimatedMonthlyFailureCount *
+          (manualReworkMinutesPerFailure / 60) *
+          hourlyOpsCostUsd;
+        const totalEstimatedMonthlyFailureCost =
+          estimatedMonthlyManualReworkCost + monthlyClientPenaltyOrLossUsd;
+        const estimatedPostDlxCost =
+          totalEstimatedMonthlyFailureCost *
+          (1 - expectedFailureReductionPercent / 100);
+        const estimatedMonthlySavings =
+          totalEstimatedMonthlyFailureCost - estimatedPostDlxCost;
+
+        outputNodes.failureCount.textContent = countFormatter.format(
+          Math.round(estimatedMonthlyFailureCount),
+        );
+        outputNodes.manualReworkCost.textContent = currencyFormatter.format(
+          estimatedMonthlyManualReworkCost,
+        );
+        outputNodes.totalCost.textContent = currencyFormatter.format(
+          totalEstimatedMonthlyFailureCost,
+        );
+        outputNodes.postDlxCost.textContent = currencyFormatter.format(estimatedPostDlxCost);
+        outputNodes.monthlySavings.textContent = currencyFormatter.format(
+          estimatedMonthlySavings,
+        );
+      }
+
+      function applyPreset(name) {
+        const preset = presets[name];
+        if (!preset) {
+          return;
+        }
+
+        for (const [key, value] of Object.entries(preset)) {
+          inputs[key].value = String(value);
+        }
+
+        update();
+      }
+
+      document.querySelectorAll("[data-preset]").forEach((button) => {
+        button.addEventListener("click", () => applyPreset(button.dataset.preset));
+      });
+
+      Object.values(inputs).forEach((input) => {
+        input.addEventListener("input", update);
+      });
+
+      update();
+    </script>
+  </body>
+</html>

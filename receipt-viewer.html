@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DLX Receipt Viewer</title>
+    <link rel="stylesheet" href="./kit.css" />
+    <style>
+      :root {
+        --bg: #f2efe8;
+        --panel: rgba(251, 250, 246, 0.92);
+        --ink: #182126;
+        --muted: #58666e;
+        --line: rgba(24, 33, 38, 0.12);
+        --accent: #155e75;
+        --success: #166534;
+        --safe: #92400e;
+        --shadow: 0 16px 44px rgba(24, 33, 38, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Courier New", Courier, monospace;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(21, 94, 117, 0.12), transparent 34%),
+          linear-gradient(180deg, #ebe7de 0%, #f4f1ea 100%);
+      }
+
+      main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 34px 20px 48px;
+      }
+
+      h1,
+      h2 {
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .top {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .lede {
+        max-width: 74ch;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .sample-button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.86);
+        padding: 14px;
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .sample-button.active {
+        border-color: rgba(21, 94, 117, 0.36);
+        background: rgba(238, 250, 252, 0.95);
+      }
+
+      .sample-button strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .sample-button span,
+      .panel p,
+      .panel li {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .chip {
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .chip.success {
+        color: var(--success);
+      }
+
+      .chip.safe {
+        color: var(--safe);
+      }
+
+      pre {
+        margin: 0;
+        padding: 18px;
+        overflow: auto;
+        border-radius: 18px;
+        background: #12191d;
+        color: #eef5f6;
+        line-height: 1.5;
+        font-size: 0.92rem;
+      }
+
+      ul {
+        padding-left: 18px;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="kit-page">
+    <header class="kit-header">
+      <div class="kit-header-inner">
+        <a class="kit-brand" href="./index.html">DLX Evaluator Kit</a>
+        <nav class="kit-nav" aria-label="Evaluator kit">
+          <a href="./index.html">Index</a>
+          <a href="./quickstart.html">Quickstart</a>
+          <a href="./api-overview.html">API Overview</a>
+          <a href="./webhook-flow.html">Webhook Flow</a>
+          <a href="./roi-calculator.html">ROI Calculator</a>
+          <a href="./receipt-viewer.html" aria-current="page">Receipt Viewer</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="top">
+        <h1>Public-Safe Audit Receipt Viewer</h1>
+        <p class="lede">
+          This viewer shows the two Phase 1 terminal outcome examples: validated success and
+          failed_safe. It is for trust explanation, not for exposing the full internal audit trail.
+        </p>
+      </section>
+
+      <section class="layout">
+        <aside class="panel">
+          <h2>Samples</h2>
+          <button class="sample-button active" type="button" data-sample="success">
+            <strong>Success Receipt</strong>
+            <span>Validated success with public-safe output summary and delivery state.</span>
+          </button>
+          <button class="sample-button" type="button" data-sample="failed_safe">
+            <strong>Failed Safe Receipt</strong>
+            <span>Terminal safe failure with classified reason and no sensitive internals.</span>
+          </button>
+
+          <h2>What It Shows</h2>
+          <ul>
+            <li>terminal outcome</li>
+            <li>contract boundary</li>
+            <li>validation result</li>
+            <li>delivery state kept separate from outcome truth</li>
+          </ul>
+
+          <h2>What It Hides</h2>
+          <ul>
+            <li>raw payloads</li>
+            <li>unvalidated output attempts</li>
+            <li>prompts, routing internals, and secrets</li>
+          </ul>
+        </aside>
+
+        <div class="panel">
+          <div class="chips" id="chips"></div>
+          <pre id="receipt-json"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const samples = {
+        success: {
+          receiptVersion: "1.0",
+          receiptId: "rcpt_01hzk8m7v7k8d2w4n8y5q1s4t",
+          executionId: "exec_01hzk8jyr4r2x0hh9e0d7f2f4q",
+          workflowId: "wf_01hzk8k8vzw6w1d1m2f6n9j3pa",
+          managedWorkflow: "auditable_execution_gateway",
+          status: "succeeded",
+          outcome: "validated_success",
+          outputContract: "contract:extract.result.v1",
+          acceptedAt: "2026-03-20T09:12:11.000Z",
+          decidedAt: "2026-03-20T09:12:29.000Z",
+          deliveryState: "recorded",
+          validation: {
+            result: "passed",
+            validator: "contract_reference",
+            contractReference: "contract:extract.result.v1"
+          },
+          safeToShare: {
+            finalOutputSummary: {
+              documentClass: "invoice",
+              recordCount: 128,
+              currency: "USD"
+            }
+          },
+          auditSummary: {
+            eventCount: 11,
+            repairAttempts: 1,
+            receiptScope: "public_safe"
+          }
+        },
+        failed_safe: {
+          receiptVersion: "1.0",
+          receiptId: "rcpt_01hzk8p8wb4jzt3g70f1b91n0x",
+          executionId: "exec_01hzk8nzv9n7y1cz3h1a7a4d6k",
+          workflowId: "wf_01hzk8peb0m1d6f7a6r8s2v9qn",
+          managedWorkflow: "auditable_execution_gateway",
+          status: "failed_safe",
+          outcome: "safe_failure",
+          outputContract: "contract:extract.result.v1",
+          acceptedAt: "2026-03-20T11:40:05.000Z",
+          decidedAt: "2026-03-20T11:40:32.000Z",
+          deliveryState: "recorded",
+          validation: {
+            result: "failed",
+            validator: "contract_reference",
+            contractReference: "contract:extract.result.v1"
+          },
+          safeFailure: {
+            failureClassification: "schema_failure",
+            reasonCode: "missing_required_field"
+          },
+          auditSummary: {
+            eventCount: 10,
+            repairAttempts: 2,
+            receiptScope: "public_safe"
+          }
+        }
+      };
+
+      const receiptNode = document.getElementById("receipt-json");
+      const chipsNode = document.getElementById("chips");
+      const buttons = [...document.querySelectorAll("[data-sample]")];
+
+      function renderSample(sampleName) {
+        const sample = samples[sampleName];
+        receiptNode.textContent = JSON.stringify(sample, null, 2);
+        chipsNode.innerHTML = "";
+
+        const chips = [
+          { text: "status: " + sample.status, className: sample.status === "succeeded" ? "success" : "safe" },
+          { text: "outcome: " + sample.outcome, className: sample.status === "succeeded" ? "success" : "safe" },
+          { text: "delivery: " + sample.deliveryState, className: "" },
+          { text: "contract: " + sample.outputContract, className: "" }
+        ];
+
+        chips.forEach((chip) => {
+          const node = document.createElement("div");
+          node.className = "chip" + (chip.className ? " " + chip.className : "");
+          node.textContent = chip.text;
+          chipsNode.appendChild(node);
+        });
+
+        buttons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.sample === sampleName);
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => renderSample(button.dataset.sample));
+      });
+
+      renderSample("success");
+    </script>
+  </body>
+</html>

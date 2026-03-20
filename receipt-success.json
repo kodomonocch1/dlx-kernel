@@ -1,0 +1,30 @@
+{
+  "receiptVersion": "1.0",
+  "receiptId": "rcpt_01hzk8m7v7k8d2w4n8y5q1s4t",
+  "executionId": "exec_01hzk8jyr4r2x0hh9e0d7f2f4q",
+  "workflowId": "wf_01hzk8k8vzw6w1d1m2f6n9j3pa",
+  "managedWorkflow": "auditable_execution_gateway",
+  "status": "succeeded",
+  "outcome": "validated_success",
+  "outputContract": "contract:extract.result.v1",
+  "acceptedAt": "2026-03-20T09:12:11.000Z",
+  "decidedAt": "2026-03-20T09:12:29.000Z",
+  "deliveryState": "recorded",
+  "validation": {
+    "result": "passed",
+    "validator": "contract_reference",
+    "contractReference": "contract:extract.result.v1"
+  },
+  "safeToShare": {
+    "finalOutputSummary": {
+      "documentClass": "invoice",
+      "recordCount": 128,
+      "currency": "USD"
+    }
+  },
+  "auditSummary": {
+    "eventCount": 11,
+    "repairAttempts": 1,
+    "receiptScope": "public_safe"
+  }
+}

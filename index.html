@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DLX Phase 1 Evaluator Kit</title>
+    <link rel="stylesheet" href="./kit.css" />
+  </head>
+  <body class="kit-page">
+    <header class="kit-header">
+      <div class="kit-header-inner">
+        <a class="kit-brand" href="./index.html">DLX Evaluator Kit</a>
+        <nav class="kit-nav" aria-label="Evaluator kit">
+          <a href="./index.html" aria-current="page">Index</a>
+          <a href="./quickstart.html">Quickstart</a>
+          <a href="./api-overview.html">API Overview</a>
+          <a href="./webhook-flow.html">Webhook Flow</a>
+          <a href="./roi-calculator.html">ROI Calculator</a>
+          <a href="./receipt-viewer.html">Receipt Viewer</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="kit-main">
+      <section class="kit-hero">
+        <p class="kit-eyebrow">DLX / Auditable Execution Gateway</p>
+        <h1>One narrow evaluator path for Phase 1.</h1>
+        <p class="kit-lede">
+          This kit packages the current public evaluation surface for DLX: auditable execution,
+          verified result or safe failure, and workflow insurance for high-stakes automation.
+        </p>
+        <p class="kit-copy">
+          Current live evaluation base URL:
+          <span class="kit-inline-code">https://nurturing-nurturing-production.up.railway.app</span>
+        </p>
+        <div class="kit-actions">
+          <a class="kit-button" href="./quickstart.html">Start With Quickstart</a>
+          <a class="kit-button secondary" href="./api-overview.html">Inspect API Shape</a>
+        </div>
+      </section>
+
+      <section class="kit-grid">
+        <article class="kit-card" id="what-this-is">
+          <h2>What This Is</h2>
+          <p>
+            The current public surface is a managed execution endpoint for Auditable Execution
+            Gateway. It accepts work, returns accepted-first status, and converges to either
+            validated success or failed_safe.
+          </p>
+          <div class="kit-pill-row">
+            <span class="kit-pill">auditable execution</span>
+            <span class="kit-pill">validated success</span>
+            <span class="kit-pill">safe failure</span>
+            <span class="kit-pill">workflow safety layer</span>
+          </div>
+        </article>
+
+        <article class="kit-card" id="quickstart">
+          <h2>Quickstart</h2>
+          <p>
+            Best first link for a general technical evaluator. Covers create, poll, terminal
+            states, and the narrow current surface.
+          </p>
+          <div class="kit-actions">
+            <a class="kit-button" href="./quickstart.html">Open Quickstart</a>
+          </div>
+        </article>
+
+        <article class="kit-card" id="roi-calculator">
+          <h2>ROI Calculator</h2>
+          <p>
+            Use when the conversation is about silent-failure cost, rework, downstream loss, and
+            workflow insurance rather than model access.
+          </p>
+          <div class="kit-actions">
+            <a class="kit-button" href="./roi-calculator.html">Open ROI Calculator</a>
+          </div>
+        </article>
+
+        <article class="kit-card" id="receipt-viewer">
+          <h2>Audit Receipt Viewer</h2>
+          <p>
+            Best trust artifact for explaining what a public-safe receipt proves, what it does not
+            prove, and how success versus failed_safe is represented.
+          </p>
+          <div class="kit-actions">
+            <a class="kit-button" href="./receipt-viewer.html">Open Receipt Viewer</a>
+          </div>
+        </article>
+
+        <article class="kit-card" id="api-overview">
+          <h2>API Overview</h2>
+          <p>
+            Shows the current route shape, request payload, accepted-first response, success
+            response, and failed_safe response without adding any broader product assumptions.
+          </p>
+          <div class="kit-actions">
+            <a class="kit-button" href="./api-overview.html">Open API Overview</a>
+          </div>
+        </article>
+
+        <article class="kit-card" id="webhook-flow">
+          <h2>Webhook Flow</h2>
+          <p>
+            Explains how completion notification relates to workflow truth, and why delivery state
+            stays separate from validated business outcome.
+          </p>
+          <div class="kit-actions">
+            <a class="kit-button" href="./webhook-flow.html">Open Webhook Flow</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="kit-section" id="sdk-example">
+        <h2>SDK Example</h2>
+        <p class="kit-copy">
+          The repo-local TypeScript SDK stays small: <span class="kit-inline-code">createExecution</span>
+          and <span class="kit-inline-code">getExecution</span>. The example below matches the
+          current gateway route and status vocabulary.
+        </p>
+        <pre class="kit-code">const client = new DlxClient({
+  baseUrl: "https://nurturing-nurturing-production.up.railway.app",
+  apiKey: "test-key",
+});
+
+const accepted = await client.createExecution({
+  input: { text: "phase1-success" },
+  outputContract: "contract:extract.result.v1",
+  budget: { maximumEu: 1 },
+  idempotencyKey: "sdk-example-1",
+});
+
+const execution = await client.getExecution(accepted.executionId);</pre>
+        <p class="kit-copy">
+          Repo files: <span class="kit-inline-code">packages/sdk-typescript/</span> and
+          <span class="kit-inline-code">examples/sdk-basic.ts</span>.
+        </p>
+      </section>
+
+      <section class="kit-section" id="next-step">
+        <h2>Contact / Next Step</h2>
+        <p class="kit-copy">
+          The useful next step is small and technical: send one high-stakes payload, ask for a
+          workflow review, or evaluate whether the current issue is silent-failure cost rather than
+          raw model quality.
+        </p>
+        <div class="kit-pill-row">
+          <span class="kit-pill">send one payload</span>
+          <span class="kit-pill">request workflow review</span>
+          <span class="kit-pill">evaluate trust boundary</span>
+        </div>
+      </section>
+
+      <p class="kit-footer">
+        Static publishing target: this entire <span class="kit-inline-code">docs/public/</span>
+        directory, with <span class="kit-inline-code">index.html</span> as the entry page.
+      </p>
+    </main>
+  </body>
+</html>

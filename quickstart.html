@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DLX Quickstart</title>
+    <link rel="stylesheet" href="./kit.css" />
+  </head>
+  <body class="kit-page">
+    <header class="kit-header">
+      <div class="kit-header-inner">
+        <a class="kit-brand" href="./index.html">DLX Evaluator Kit</a>
+        <nav class="kit-nav" aria-label="Evaluator kit">
+          <a href="./index.html">Index</a>
+          <a href="./quickstart.html" aria-current="page">Quickstart</a>
+          <a href="./api-overview.html">API Overview</a>
+          <a href="./webhook-flow.html">Webhook Flow</a>
+          <a href="./roi-calculator.html">ROI Calculator</a>
+          <a href="./receipt-viewer.html">Receipt Viewer</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="kit-main">
+      <section class="kit-hero">
+        <p class="kit-eyebrow">DLX Quickstart</p>
+        <h1>Understand the current flow in three minutes.</h1>
+        <p class="kit-lede">
+          DLX Phase 1 is a workflow safety layer for Auditable Execution Gateway, not raw API
+          access. The evaluator path is narrow on purpose.
+        </p>
+        <p class="kit-copy">
+          Current live evaluation base URL:
+          <span class="kit-inline-code">https://nurturing-nurturing-production.up.railway.app</span>
+        </p>
+      </section>
+
+      <section class="kit-section">
+        <h2>Current Public Surface</h2>
+        <ul class="kit-list">
+          <li><span class="kit-inline-code">POST /v1/executions/extract</span></li>
+          <li><span class="kit-inline-code">GET /v1/executions/:id</span></li>
+          <li>optional webhook delivery for completion notification</li>
+        </ul>
+      </section>
+
+      <section class="kit-section">
+        <h2>Evaluator Path</h2>
+        <ol class="kit-list">
+          <li>create an execution with <span class="kit-inline-code">POST /v1/executions/extract</span></li>
+          <li>receive an accepted-first response</li>
+          <li>poll <span class="kit-inline-code">GET /v1/executions/:id</span> or optionally provide a webhook target</li>
+          <li>reach either validated success or failed_safe</li>
+          <li>use the receipt viewer and ROI calculator where relevant</li>
+        </ol>
+      </section>
+
+      <section class="kit-section">
+        <h2>Minimal Live Request</h2>
+        <pre class="kit-code">curl -X POST https://nurturing-nurturing-production.up.railway.app/v1/executions/extract \
+  -H "content-type: application/json" \
+  -H "x-api-key: test-key" \
+  -d '{
+    "input": { "text": "phase1-success" },
+    "outputContract": "contract:extract.result.v1",
+    "budget": { "maximumEu": 1 },
+    "idempotencyKey": "phase1-live-eval-1"
+  }'</pre>
+        <p class="kit-copy">
+          The create response is accepted-first. <span class="kit-inline-code">pollUrl</span> is a
+          relative path and should be resolved against the gateway base URL, for example
+          <span class="kit-inline-code">https://nurturing-nurturing-production.up.railway.app/v1/executions/exec_mmz8xtgp_h5pael2y</span>.
+        </p>
+      </section>
+
+      <section class="kit-section">
+        <h2>What You Get</h2>
+        <ul class="kit-list">
+          <li>guaranteed / auditable task execution at the workflow boundary</li>
+          <li>a workflow safety layer, not just an LLM call</li>
+          <li>validated success or safe failure, not silent optimistic completion</li>
+          <li>polling is a valid evaluator path; webhook is optional</li>
+        </ul>
+        <div class="kit-actions">
+          <a class="kit-button" href="./api-overview.html">Next: API Overview</a>
+          <a class="kit-button secondary" href="./receipt-viewer.html">Trust Artifact View</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
