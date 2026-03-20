@@ -48,6 +48,12 @@
         margin-bottom: 20px;
       }
 
+      .intro-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
       .lede {
         max-width: 74ch;
         color: var(--muted);
@@ -66,6 +72,10 @@
         border-radius: 22px;
         padding: 20px;
         box-shadow: var(--shadow);
+      }
+
+      .summary-card h2 {
+        margin-bottom: 10px;
       }
 
       .sample-button {
@@ -137,6 +147,7 @@
       }
 
       @media (max-width: 900px) {
+        .intro-grid,
         .layout {
           grid-template-columns: 1fr;
         }
@@ -161,8 +172,32 @@
       <section class="top">
         <h1>Public-Safe Audit Receipt Viewer</h1>
         <p class="lede">
-          This viewer shows the two Phase 1 terminal outcome examples: validated success and
-          failed_safe. It is for trust explanation, not for exposing the full internal audit trail.
+          This viewer shows what a public-safe receipt proves at the workflow boundary, what it
+          does not prove, and how the two Phase 1 terminal outcomes differ.
+        </p>
+        <div class="intro-grid">
+          <div class="panel summary-card">
+            <h2>What The Sample Proves</h2>
+            <ul>
+              <li>the execution reached a terminal outcome</li>
+              <li>the receipt records the contract boundary and validation result</li>
+              <li>delivery state is reported separately from outcome truth</li>
+            </ul>
+          </div>
+          <div class="panel summary-card">
+            <h2>What It Does Not Prove</h2>
+            <ul>
+              <li>raw inputs, prompts, or internal routing details</li>
+              <li>any hidden audit events beyond the public-safe receipt scope</li>
+              <li>that a public receipt alone exposes the full internal audit trail</li>
+            </ul>
+          </div>
+        </div>
+        <p class="lede">
+          <span class="kit-inline-code">succeeded</span> and
+          <span class="kit-inline-code">failed_safe</span> are both terminal outcomes with
+          different meanings: one confirms validated success, and the other confirms the workflow
+          stopped safely without claiming success.
         </p>
       </section>
 
@@ -171,11 +206,11 @@
           <h2>Samples</h2>
           <button class="sample-button active" type="button" data-sample="success">
             <strong>Success Receipt</strong>
-            <span>Validated success with public-safe output summary and delivery state.</span>
+            <span>Terminal validated success with a public-safe output summary and recorded delivery state.</span>
           </button>
           <button class="sample-button" type="button" data-sample="failed_safe">
             <strong>Failed Safe Receipt</strong>
-            <span>Terminal safe failure with classified reason and no sensitive internals.</span>
+            <span>Terminal safe stop with a classified failure reason and no sensitive internals.</span>
           </button>
 
           <h2>What It Shows</h2>

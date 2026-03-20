@@ -145,6 +145,44 @@ body.kit-page {
   margin-top: 18px;
 }
 
+.kit-notice,
+.kit-cta {
+  border-radius: 18px;
+  border: 1px solid var(--kit-line);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.kit-notice {
+  margin-top: 14px;
+  padding: 14px 16px;
+}
+
+.kit-notice p,
+.kit-cta p,
+.kit-cta li {
+  color: var(--kit-muted);
+  line-height: 1.6;
+}
+
+.kit-cta {
+  margin-top: 18px;
+  padding: 18px 20px;
+}
+
+.kit-cta h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.kit-cta ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.kit-cta a {
+  color: var(--kit-accent-strong);
+}
+
 .kit-actions {
   display: flex;
   flex-wrap: wrap;

@@ -26,8 +26,8 @@
         <p class="kit-eyebrow">DLX / Auditable Execution Gateway</p>
         <h1>One narrow evaluator path for Phase 1.</h1>
         <p class="kit-lede">
-          This kit packages the current public evaluation surface for DLX: auditable execution,
-          verified result or safe failure, and workflow insurance for high-stakes automation.
+          This evaluator kit covers the current managed execution endpoint: submit work, receive an
+          accepted response, and end in either succeeded or failed_safe.
         </p>
         <p class="kit-copy">
           Current live evaluation base URL:
@@ -43,14 +43,14 @@
         <article class="kit-card" id="what-this-is">
           <h2>What This Is</h2>
           <p>
-            The current public surface is a managed execution endpoint for Auditable Execution
-            Gateway. It accepts work, returns accepted-first status, and converges to either
-            validated success or failed_safe.
+            The current public surface is a narrow managed execution endpoint for Auditable
+            Execution Gateway. It accepts work, returns an accepted-first status, and converges to
+            either succeeded or failed_safe.
           </p>
           <div class="kit-pill-row">
             <span class="kit-pill">auditable execution</span>
-            <span class="kit-pill">validated success</span>
-            <span class="kit-pill">safe failure</span>
+            <span class="kit-pill">accepted-first flow</span>
+            <span class="kit-pill">terminal outcomes</span>
             <span class="kit-pill">workflow safety layer</span>
           </div>
         </article>
@@ -120,7 +120,7 @@
         </p>
         <pre class="kit-code">const client = new DlxClient({
   baseUrl: "https://nurturing-nurturing-production.up.railway.app",
-  apiKey: "test-key",
+  apiKey: "&lt;YOUR_EVAL_API_KEY&gt;",
 });
 
 const accepted = await client.createExecution({
@@ -140,14 +140,20 @@ const execution = await client.getExecution(accepted.executionId);</pre>
       <section class="kit-section" id="next-step">
         <h2>Contact / Next Step</h2>
         <p class="kit-copy">
-          The useful next step is small and technical: send one high-stakes payload, ask for a
-          workflow review, or evaluate whether the current issue is silent-failure cost rather than
-          raw model quality.
+          Keep the next step narrow: request an evaluation API key, send one payload for review, or
+          contact for evaluator access.
         </p>
-        <div class="kit-pill-row">
-          <span class="kit-pill">send one payload</span>
-          <span class="kit-pill">request workflow review</span>
-          <span class="kit-pill">evaluate trust boundary</span>
+        <div class="kit-cta">
+          <h3>Evaluator Contact</h3>
+          <p>
+            Email <a href="mailto:tetsutetsu11@icloud.com">tetsutetsu11@icloud.com</a> to request
+            an evaluation API key, send one payload for review, or ask for evaluator access.
+          </p>
+          <ul class="kit-list">
+            <li>request an evaluation API key</li>
+            <li>send one payload for review</li>
+            <li>contact for evaluator access</li>
+          </ul>
         </div>
       </section>
 

@@ -57,9 +57,14 @@
 
       <section class="kit-section">
         <h2>Minimal Live Request</h2>
+        <div class="kit-notice">
+          <p>
+            An evaluation API key is required. Request one if you want to test the live gateway.
+          </p>
+        </div>
         <pre class="kit-code">curl -X POST https://nurturing-nurturing-production.up.railway.app/v1/executions/extract \
   -H "content-type: application/json" \
-  -H "x-api-key: test-key" \
+  -H "x-api-key: &lt;YOUR_EVAL_API_KEY&gt;" \
   -d '{
     "input": { "text": "phase1-success" },
     "outputContract": "contract:extract.result.v1",
@@ -84,6 +89,22 @@
         <div class="kit-actions">
           <a class="kit-button" href="./api-overview.html">Next: API Overview</a>
           <a class="kit-button secondary" href="./receipt-viewer.html">Trust Artifact View</a>
+        </div>
+      </section>
+
+      <section class="kit-section">
+        <h2>Contact / Next Step</h2>
+        <div class="kit-cta">
+          <h3>Evaluator Access</h3>
+          <p>
+            Email <a href="mailto:tetsutetsu11@icloud.com">tetsutetsu11@icloud.com</a> to request
+            an evaluation API key, send one payload for review, or contact for evaluator access.
+          </p>
+          <ul class="kit-list">
+            <li>request an evaluation API key</li>
+            <li>send one payload for review</li>
+            <li>contact for evaluator access</li>
+          </ul>
         </div>
       </section>
     </main>
