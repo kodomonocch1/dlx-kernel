@@ -50,7 +50,7 @@
           <li>create an execution with <span class="kit-inline-code">POST /v1/executions/extract</span></li>
           <li>receive an accepted-first response</li>
           <li>poll <span class="kit-inline-code">GET /v1/executions/:id</span> or optionally provide a webhook target</li>
-          <li>reach either validated success or failed_safe</li>
+          <li>reach either succeeded or failed_safe</li>
           <li>use the receipt viewer and ROI calculator where relevant</li>
         </ol>
       </section>
@@ -83,7 +83,7 @@
         <ul class="kit-list">
           <li>guaranteed / auditable task execution at the workflow boundary</li>
           <li>a workflow safety layer, not just an LLM call</li>
-          <li>validated success or safe failure, not silent optimistic completion</li>
+          <li>succeeded or failed_safe, not silent optimistic completion</li>
           <li>polling is a valid evaluator path; webhook is optional</li>
         </ul>
         <div class="kit-actions">

@@ -24,7 +24,7 @@
     <main class="kit-main">
       <section class="kit-hero">
         <p class="kit-eyebrow">Current Gateway Shape</p>
-        <h1>Accepted first. Then validated success or safe failure.</h1>
+        <h1>Accepted first. Then succeeded or failed_safe.</h1>
         <p class="kit-lede">
           This is the smallest useful public evaluator view of the current Auditable Execution
           Gateway API. It stays inside the current managed execution endpoint.
@@ -64,7 +64,7 @@
 
       <section class="kit-grid">
         <article class="kit-card">
-          <h3>Success Response</h3>
+          <h3>Succeeded Response</h3>
           <pre class="kit-code">{
   "executionId": "exec_mmz8xtgp_h5pael2y",
   "workflowId": "wf_mmz8xtgp_shoocoiz",
@@ -79,7 +79,7 @@
         </article>
 
         <article class="kit-card">
-          <h3>Failed-Safe Response</h3>
+          <h3>failed_safe Response</h3>
           <pre class="kit-code">{
   "executionId": "exec_mmz8xw6e_zyhx6twm",
   "workflowId": "wf_mmz8xw6e_xvcyb99x",
@@ -97,7 +97,7 @@
         <h2>Interpretation</h2>
         <ul class="kit-list">
           <li><span class="kit-inline-code">succeeded</span> means deterministic validation passed.</li>
-          <li><span class="kit-inline-code">failed_safe</span> means the workflow stopped without claiming unvalidated success.</li>
+          <li><span class="kit-inline-code">failed_safe</span> means the workflow stopped without claiming <span class="kit-inline-code">succeeded</span>.</li>
           <li><span class="kit-inline-code">deliveryState</span> describes notification handling, not business outcome truth.</li>
           <li>the latest confirmed live success and failed_safe runs both ended with <span class="kit-inline-code">deliveryState: "recorded"</span>.</li>
         </ul>

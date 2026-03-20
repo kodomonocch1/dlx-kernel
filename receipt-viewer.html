@@ -196,8 +196,8 @@
         <p class="lede">
           <span class="kit-inline-code">succeeded</span> and
           <span class="kit-inline-code">failed_safe</span> are both terminal outcomes with
-          different meanings: one confirms validated success, and the other confirms the workflow
-          stopped safely without claiming success.
+          different meanings: one confirms a validated result, and the other confirms the workflow
+          stopped safely without claiming a succeeded outcome.
         </p>
       </section>
 
@@ -205,12 +205,12 @@
         <aside class="panel">
           <h2>Samples</h2>
           <button class="sample-button active" type="button" data-sample="success">
-            <strong>Success Receipt</strong>
-            <span>Terminal validated success with a public-safe output summary and recorded delivery state.</span>
+            <strong>Receipt: succeeded</strong>
+            <span>Terminal succeeded outcome with a public-safe output summary and recorded delivery state.</span>
           </button>
           <button class="sample-button" type="button" data-sample="failed_safe">
-            <strong>Failed Safe Receipt</strong>
-            <span>Terminal safe stop with a classified failure reason and no sensitive internals.</span>
+            <strong>Receipt: failed_safe</strong>
+            <span>Terminal failed_safe outcome with a classified failure reason and no sensitive internals.</span>
           </button>
 
           <h2>What It Shows</h2>
@@ -245,7 +245,7 @@
           workflowId: "wf_01hzk8k8vzw6w1d1m2f6n9j3pa",
           managedWorkflow: "auditable_execution_gateway",
           status: "succeeded",
-          outcome: "validated_success",
+          outcome: "succeeded",
           outputContract: "contract:extract.result.v1",
           acceptedAt: "2026-03-20T09:12:11.000Z",
           decidedAt: "2026-03-20T09:12:29.000Z",
@@ -275,7 +275,7 @@
           workflowId: "wf_01hzk8peb0m1d6f7a6r8s2v9qn",
           managedWorkflow: "auditable_execution_gateway",
           status: "failed_safe",
-          outcome: "safe_failure",
+          outcome: "failed_safe",
           outputContract: "contract:extract.result.v1",
           acceptedAt: "2026-03-20T11:40:05.000Z",
           decidedAt: "2026-03-20T11:40:32.000Z",
