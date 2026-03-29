@@ -13,6 +13,7 @@
         <nav class="kit-nav" aria-label="Evaluator kit">
           <a href="./index.html" aria-current="page">Index</a>
           <a href="./quickstart.html">Quickstart</a>
+          <a href="./submit-payload.html">Submit Payload</a>
           <a href="./api-overview.html">API Overview</a>
           <a href="./webhook-flow.html">Webhook Flow</a>
           <a href="./roi-calculator.html">ROI Calculator</a>
@@ -35,6 +36,7 @@
         </p>
         <div class="kit-actions">
           <a class="kit-button" href="./quickstart.html">Start With Quickstart</a>
+          <a class="kit-button secondary" href="./submit-payload.html">Submit One Payload</a>
           <a class="kit-button secondary" href="./api-overview.html">Inspect API Shape</a>
         </div>
       </section>
@@ -63,6 +65,22 @@
           </p>
           <div class="kit-actions">
             <a class="kit-button" href="./quickstart.html">Open Quickstart</a>
+          </div>
+        </article>
+
+        <article class="kit-card" id="submit-payload">
+          <h2>Submit One Payload</h2>
+          <p>
+            Use this narrow design-partner path when you want evaluator review on one real payload,
+            one target schema, and the downstream risk if failure is expensive.
+          </p>
+          <div class="kit-pill-row">
+            <span class="kit-pill">one sample payload</span>
+            <span class="kit-pill">target schema</span>
+            <span class="kit-pill">polling or webhook</span>
+          </div>
+          <div class="kit-actions">
+            <a class="kit-button" href="./submit-payload.html">Request Evaluator Review</a>
           </div>
         </article>
 
@@ -144,19 +162,22 @@ const execution = await client.getExecution(accepted.executionId);</pre>
         <h2>Contact / Next Step</h2>
         <p class="kit-copy">
           Keep the next step narrow: request an evaluation API key, send one payload for review, or
-          contact for evaluator access.
+          use the design-partner path for evaluator review.
         </p>
         <div class="kit-cta">
           <h3>Evaluator Contact</h3>
           <p>
             Email <a href="mailto:tetsutetsu11@icloud.com">tetsutetsu11@icloud.com</a> to request
-            an evaluation API key, send one payload for review, or ask for evaluator access.
+            an evaluation API key, submit one payload for review, or ask for evaluator access.
           </p>
           <ul class="kit-list">
             <li>request an evaluation API key</li>
-            <li>send one payload for review</li>
+            <li>submit one payload for review</li>
             <li>contact for evaluator access</li>
           </ul>
+          <div class="kit-actions">
+            <a class="kit-button" href="./submit-payload.html">Design Partner Path</a>
+          </div>
         </div>
       </section>
 
