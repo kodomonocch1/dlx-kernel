@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Public evaluator kit
+    url: ../../blob/main/index.html
+    about: Review the public evaluator kit home before opening a new thread.
+  - name: Submit payload page
+    url: ../../blob/main/submit-payload.html
+    about: Use the static payload-intake page when you are ready to share one workflow payload.
+  - name: Email contact
+    url: mailto:tetsutetsu11@icloud.com
+    about: Email directly for API key requests or sensitive payload handoff.
