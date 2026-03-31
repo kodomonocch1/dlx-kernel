@@ -1,22 +1,96 @@
-# DLX Public Evaluator Kit
+# DLX Kernel
 
-This repo is the public evaluator kit for a narrow auditable execution surface. It is a static, public-facing hub for evaluators who need to understand the current managed execution endpoint, review the workflow insurance / reliability layer, and decide whether to submit one payload for review.
+This repository is **not** the current primary public evaluation entry for DLX Phase 1.
 
-The evaluator flow is intentionally narrow. A submission is first accepted, then it resolves to either `succeeded` or `failed_safe`. That framing matters: the public kit is about verified result or safe failure at the workflow boundary, not optimistic completion or broad product claims.
+The current public-facing evaluation repo is:
 
-Use the static pages here to move through the current evaluator path. Start at the [public evaluator kit home](./index.html), then review the [quickstart](./quickstart.html), inspect the [receipt viewer](./receipt-viewer.html), estimate downstream cost with the [ROI calculator](./roi-calculator.html), or use the [submit payload page](./submit-payload.html) when you are ready to share one workflow payload in a narrow intake flow.
+- **[dlx-public-kit](https://github.com/kodomonocch1/dlx-public-kit)**
 
-This repo is public-facing only. It is not the private DLX kernel implementation, it does not expose backend code, and it does not define new runtime or product capabilities beyond the current evaluator kit surface.
+That repo is the correct starting point for external evaluators who want to understand the current Phase 1 surface, review the narrow public flow, and inspect sanitized examples and public-safe verification notes.
 
-Contact: [tetsutetsu11@icloud.com](mailto:tetsutetsu11@icloud.com)
+---
 
-## How To Engage
+## What This Repo Is
 
-- request an evaluation API key
-- submit one payload
-- open a discussion
-- open an issue if you want to share a payload in structured form
+This repository exists as a **kernel-oriented / legacy public companion** for DLX.
 
-## Community Routing
+DLX itself is being developed around a long-term kernel-first direction. The current public Phase 1 surface is intentionally narrow and proxy-first, while the deeper kernel and delivery-layer reality sit behind that surface.
 
-Use the short routing note in [docs/community-routing.md](./docs/community-routing.md) to decide when to use Discussions, Issues, email, or the submit payload page.
+In practical terms:
+
+- the current **public entry** is `dlx-public-kit`
+- the current **public Phase 1 surface** is a thin MCP-native trust proxy
+- the current evaluator-facing operations are intentionally narrow
+- the gateway is treated as an **internal / secondary delivery layer**, not the public product face
+
+This repository should therefore be read as background or companion context, not as the primary evaluator path.
+
+---
+
+## Start Here Instead
+
+For the current public Phase 1 evaluation path, start with:
+
+- **[dlx-public-kit](https://github.com/kodomonocch1/dlx-public-kit)**
+- `README.md` in that repo
+- `docs/quickstart-phase1.md`
+- `docs/api-phase1.md`
+- `docs/verification-phase1.md`
+- `examples/phase1/`
+
+That repo reflects the current public positioning more accurately than this one.
+
+---
+
+## What DLX Phase 1 Currently Means
+
+At the public level, DLX Phase 1 is presented as a **thin MCP-native trust proxy**.
+
+The evaluator-facing logic is intentionally narrow:
+
+- call `extract`
+- then call `get_execution`
+- judge the boundary by whether work resolves to:
+  - `succeeded`
+  - `failed_safe`
+
+The public promise is not a broad workflow platform, marketplace, dashboard, or general-purpose AI wrapper. The goal is a narrow trust boundary with verified-result-or-safe-failure behavior.
+
+---
+
+## What This Repo Does Not Represent
+
+This repo should **not** be interpreted as:
+
+- the current primary public evaluation kit
+- a broad gateway-first public product
+- a broad public API catalog
+- a marketplace
+- a multi-workflow public platform
+- the complete private implementation repo with all internal operational detail
+
+---
+
+## Contact
+
+For current Phase 1 evaluation questions or payload discussion:
+
+- [tetsutetsu11@icloud.com](mailto:tetsutetsu11@icloud.com)
+
+For the current public evaluation materials, use:
+
+- **[dlx-public-kit](https://github.com/kodomonocch1/dlx-public-kit)**
+
+---
+
+## Current Role of This Repository
+
+Use this repository only as one of the following:
+
+- historical / transitional public context
+- kernel-oriented naming/context companion
+- a pointer toward the current public evaluation repo
+
+The active public evaluator path for Phase 1 has moved to:
+
+- **[dlx-public-kit](https://github.com/kodomonocch1/dlx-public-kit)**
